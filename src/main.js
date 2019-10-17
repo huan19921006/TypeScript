@@ -10,6 +10,7 @@ Vue.use(Vuex);
 Vue.use(VueBus);
 Vue.config.productionTip = false
 
+//vueX 用法
 const store = new Vuex.Store({
   state: {
     count: 0
