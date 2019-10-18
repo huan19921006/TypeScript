@@ -1,29 +1,62 @@
-var greetUnnamed;
-greetUnnamed = function (name) {
-    if (name) {
-        return "Hi! " + name;
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Email = /** @class */ (function () {
+    function Email(email) {
+        if (this.validateEmail(email)) {
+            this.email = email;
+        }
+        else {
+            throw new Error("Invalid email!");
+        }
     }
-};
-alert(greetUnnamed('huan'));
-function add() {
-    var foo = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        foo[_i] = arguments[_i];
+    Email.prototype.validateEmail = function (email) {
+        var re = /\S+@\S+\.\S/;
+        return re.test(email);
+    };
+    Email.prototype.get = function () {
+        return this.email;
+    };
+    return Email;
+}());
+var Person = /** @class */ (function () {
+    function Person(name, email) {
+        this.name = name;
+        this.email = email;
     }
-    var result = 0;
-    for (var i = 0; i < foo.length; i++) {
-        result += foo[i];
+    Person.prototype.greet = function () {
+        alert("Hi!");
+    };
+    return Person;
+}());
+var Teacher = /** @class */ (function (_super) {
+    __extends(Teacher, _super);
+    function Teacher(name, email, subjects) {
+        var _this = _super.call(this, name, email) || this;
+        _this.subjects = subjects;
+        return _this;
     }
-    return result;
-}
-alert(add(2, 2));
-alert(add(2, 2, 2));
-var bar = 0;
-(function (global) {
-    var foo = 0;
-    bar = 1;
-    console.log(global.bar);
-    console.log(foo);
-})(this);
-console.log(bar);
-
+    Teacher.prototype.greet = function () {
+        _super.prototype.greet.call(this);
+        alert("I teach " + this.subjects);
+    };
+    Teacher.prototype.teach = function () {
+        alert("Welcome to class!");
+    };
+    return Teacher;
+}(Person));
+var teacher = new Teacher("remo", new Email("526382350@qq.com"), ["math", "physics"]);
+var me = new Person('remo', new Email("526382350@qq.com"));
+me.greet();
+teacher.greet();
+teacher.teach();

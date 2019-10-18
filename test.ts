@@ -1,29 +1,50 @@
-var greetUnnamed : (name: string) => string;
-greetUnnamed = function (name: string) : string {
-    if (name) {
-        return "Hi! " + name;
+class Email {
+    private email: string;
+    constructor(email: string) {
+        if (this.validateEmail(email)) {
+            this.email = email;
+        } else {
+            throw new Error("Invalid email!");
+        }
+    }
+    private validateEmail(email: string) {
+        var re = /\S+@\S+\.\S/;
+        return re.test(email);
+    }
+    get():string {
+        return this.email;
     }
 }
-alert(greetUnnamed('huan'));
-
-function add (...foo: number[]): number {
-    var result = 0;
-    for (var i = 0; i < foo.length; i++) {
-        result += foo[i];
+class Person {
+    public name: string;
+    public email: Email;
+    constructor(name: string, email: Email) {
+        this.name = name;
+        this.email = email;
     }
-    return result;
+    greet() {
+        alert("Hi!");
+    }
 }
 
-alert(add(2,2));
-alert(add(2,2,2));
+class Teacher extends Person {
+    public subjects : string[];
+    constructor(name: string, email: Email, subjects: string[]) {
+        super(name, email);
+        this.subjects = subjects;
+    }
+    greet() {
+        super.greet();
+        alert("I teach " + this.subjects);
+    }
+    teach() {
+        alert("Welcome to class!");
+    }
+}
 
-var bar = 0;
+var teacher = new Teacher("remo", new Email("526382350@qq.com"), ["math", "physics"]);
+var me = new Person('remo', new Email("526382350@qq.com"));
 
-(function(global) {
-    var foo: number = 0;
-    bar = 1;
-    console.log(global.bar);
-    console.log(foo);
-})(this);
-
-console.log(bar);
+me.greet();
+teacher.greet();
+teacher.teach();
